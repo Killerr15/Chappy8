@@ -19,6 +19,7 @@ target_sources(Chappy8 PRIVATE
 
 target_include_directories(Chappy8 PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(Chappy8 ${SDL2_LIBRARIES})
+target_compile_features(Chappy8 PRIVATE cxx_std_20)
 
 set(CPACK_PACKAGE_VENDOR "Chappy8")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Really basic CHIP-8 emulator made in C++!")
@@ -30,7 +31,9 @@ set(CPACK_PACKAGE_VERSION_MINOR "1")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
 
 install(TARGETS Chappy8 RUNTIME DESTINATION bin)
-install(FILES "${PROJECT_SOURCE_DIR}/ext/SDL2/lib/x64/SDL2.dll" DESTINATION bin)
+install(FILES $<TARGET_RUNTIME_DLLS:Chappy8> DESTINATION bin)
 include(CPack)
 
-target_compile_features(Chappy8 PRIVATE cxx_std_20)
+if(WIN32)
+  add_custom_command(TARGET Chappy8 POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Chappy8> ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
+endif()

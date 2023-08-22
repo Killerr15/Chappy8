@@ -4,7 +4,6 @@ This is a really basic CHIP-8 emulator made in C++. Chip-8 is an interpreted pro
 
 As of right now, emulator doesn't support audio.
 
-
 ## Usage
 
 ```bash

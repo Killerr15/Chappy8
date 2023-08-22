@@ -7,6 +7,10 @@ endif()
 
 project ("Chappy8")
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/ext/SDL2/cmake")
+
+find_package(SDL2 REQUIRED)
+
 add_executable(Chappy8)
 target_sources(Chappy8 PRIVATE
   src/Chappy8.cpp
@@ -15,8 +19,8 @@ target_sources(Chappy8 PRIVATE
   src/chip8.hpp)
 
 
-target_include_directories(Chappy8 PRIVATE "${PROJECT_SOURCE_DIR}/ext/SDL2/include")
-target_link_libraries(Chappy8 "${PROJECT_SOURCE_DIR}/ext/SDL2/lib/X64/SDL2.lib" "${PROJECT_SOURCE_DIR}/ext/SDL2/lib/x64/SDL2main.lib")
+target_include_directories(Chappy8 PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(Chappy8 ${SDL2_LIBRARIES})
 
 set(CPACK_PACKAGE_VENDOR "Chappy8")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Really basic CHIP-8 emulator made in C++!")

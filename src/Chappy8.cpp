@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	auto tex = std::shared_ptr<SDL_Texture>(SDL_CreateTexture(renderer.get(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32));
+	auto tex = std::shared_ptr<SDL_Texture>(SDL_CreateTexture(renderer.get(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32), SDL_DestroyTexture);
 	if (tex == nullptr)
 	{
 		std::cerr << "Oops! Couldn't create SDL texture!" << SDL_GetError() << std::endl;

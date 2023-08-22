@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 	}
 
 	SDL_Init(SDL_INIT_EVERYTHING);
-	auto window = std::shared_ptr<SDL_Window>(SDL_CreateWindow("Chappy++", 100, 100, 1280, 720, NULL), SDL_DestroyWindow);
+	auto window = std::shared_ptr<SDL_Window>(SDL_CreateWindow("Chappy++", 100, 100, 1280, 720, 0), SDL_DestroyWindow);
 	if (window == nullptr)
 	{
 		std::cout << "Oops! Couldn't create SDL window! " << SDL_GetError() << std::endl;
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	auto renderer = std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(window.get(), NULL, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
+	auto renderer = std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(window.get(), 0, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
 	if (renderer == nullptr)
 	{
 		std::cout << "Oops! Couldn't create SDL renderer!" << SDL_GetError() << std::endl;

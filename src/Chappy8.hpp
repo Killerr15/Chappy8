@@ -6,5 +6,4 @@
 #include <thread>
 #include <string>
 #include <memory>
-#include <cstring>
 #include "chip8.hpp"

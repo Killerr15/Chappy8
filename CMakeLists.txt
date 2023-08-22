@@ -7,8 +7,6 @@ endif()
 
 project ("Chappy8")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/ext/SDL2/cmake")
-
 find_package(SDL2 REQUIRED)
 
 add_executable(Chappy8)

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <memory>
 #include <cstring>
 
 class chip8

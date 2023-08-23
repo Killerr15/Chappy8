@@ -33,15 +33,15 @@ int main(int argc, char* argv[])
 
 	auto lastCycleTime = std::chrono::high_resolution_clock::now();
 
-	chip8 cpu;
+	auto cpu = std::make_unique<chip8>();
 
-	if (!cpu.loadROM(argv[1]))
+	if (!cpu->loadROM(argv[1]))
 	{
 		exit(0);
 	}
 
 	SDL_Init(SDL_INIT_EVERYTHING);
-	auto window = std::shared_ptr<SDL_Window>(SDL_CreateWindow("Chappy++", 100, 100, 1280, 720, 0), SDL_DestroyWindow);
+	std::shared_ptr<SDL_Window> window(SDL_CreateWindow("Chappy++", 100, 100, 1280, 720, 0), SDL_DestroyWindow);
 	if (window == nullptr)
 	{
 		std::cout << "Oops! Couldn't create SDL window! " << SDL_GetError() << std::endl;
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	auto renderer = std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(window.get(), 0, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
+	std::shared_ptr<SDL_Renderer> renderer(SDL_CreateRenderer(window.get(), 0, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
 	if (renderer == nullptr)
 	{
 		std::cout << "Oops! Couldn't create SDL renderer!" << SDL_GetError() << std::endl;
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	auto tex = std::shared_ptr<SDL_Texture>(SDL_CreateTexture(renderer.get(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32), SDL_DestroyTexture);
+	std::shared_ptr<SDL_Texture> tex(SDL_CreateTexture(renderer.get(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32), SDL_DestroyTexture);
 	if (tex == nullptr)
 	{
 		std::cerr << "Oops! Couldn't create SDL texture!" << SDL_GetError() << std::endl;
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 				{
 					if (event.key.keysym.sym == keymap[i])
 					{
-						cpu.setKeyValue(i, 1);
+						cpu->setKeyValue(i, 1);
 					}
 				}
 				break;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 				{
 					if (event.key.keysym.sym == keymap[i])
 					{
-						cpu.setKeyValue(i, 0);
+						cpu->setKeyValue(i, 0);
 					}
 				}
 				break;
@@ -109,17 +109,17 @@ int main(int argc, char* argv[])
 		if (dt > cycleDelay)
 		{
 			lastCycleTime = currentTime;
-			cpu.emulate();
+			cpu->emulate();
 		}
 
-		if (cpu.getDrawFlag() == true)
+		if (cpu->getDrawFlag() == true)
 		{
-			cpu.setDrawFlag(false);
+			cpu->setDrawFlag(false);
 			uint32_t pixels[32 * 64];
 
 			for (int i = 0; i < 32 * 64; i++)
 			{
-				if (cpu.getDisplayVal(i) == 0)
+				if (cpu->getDisplayVal(i) == 0)
 				{
 					pixels[i] = 0xFF000000;
 				}

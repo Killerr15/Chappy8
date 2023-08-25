@@ -17,6 +17,7 @@ public:
 	void setDrawFlag(bool flag);
 	int getDisplayVal(int i);
 	void setKeyValue(int x, int y);
+	void updateTimers();
 private:
 	uint8_t v[16];
 	uint8_t ram[4096];

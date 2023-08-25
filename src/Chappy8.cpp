@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	std::shared_ptr<SDL_Window> window(SDL_CreateWindow("Chappy++", 100, 100, 1280, 720, 0), SDL_DestroyWindow);
 	if (window == nullptr)
 	{
-		std::cout << "Oops! Couldn't create SDL window! " << SDL_GetError() << std::endl;
+		std::cerr << "Oops! Couldn't create SDL window! " << SDL_GetError() << std::endl;
 
 		exit(1);
 	}
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 	std::shared_ptr<SDL_Renderer> renderer(SDL_CreateRenderer(window.get(), 0, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
 	if (renderer == nullptr)
 	{
-		std::cout << "Oops! Couldn't create SDL renderer!" << SDL_GetError() << std::endl;
+		std::cerr << "Oops! Couldn't create SDL renderer! " << SDL_GetError() << std::endl;
 
 		exit(1);
 	}
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 	std::shared_ptr<SDL_Texture> tex(SDL_CreateTexture(renderer.get(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32), SDL_DestroyTexture);
 	if (tex == nullptr)
 	{
-		std::cerr << "Oops! Couldn't create SDL texture!" << SDL_GetError() << std::endl;
+		std::cerr << "Oops! Couldn't create SDL texture! " << SDL_GetError() << std::endl;
 		exit(1);
 	}
 
@@ -136,4 +136,6 @@ int main(int argc, char* argv[])
 			SDL_RenderPresent(renderer.get());
 		}
 	}
+
+	SDL_Quit();
 }

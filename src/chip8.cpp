@@ -295,6 +295,11 @@ void chip8::emulate()
 		break;
 	}
 
+	updateTimers();
+}
+
+void chip8::updateTimers()
+{
 	if (delayTimer > 0)
 	{
 		delayTimer--;
@@ -304,7 +309,6 @@ void chip8::emulate()
 	{
 		soundTimer--;
 	}
-
 }
 
 bool chip8::getDrawFlag()

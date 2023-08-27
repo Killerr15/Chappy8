@@ -85,17 +85,11 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	auto device = SDL_OpenAudioDevice(0, 0, &want, &have, 0);
+	auto device = SDL_OpenAudioDevice(nullptr, 0, &want, &have, 0);
 
 	if (device == 0)
 	{
 		std::cerr << "Oops! Couldn't create SDL Audio Device! " << SDL_GetError() << std::endl;
-		exit(1);
-	}
-
-	if (&have != &have)
-	{
-		std::cerr << "Oops! Couldn't get SDL Audio Spec! " << SDL_GetError() << std::endl;
 		exit(1);
 	}
 

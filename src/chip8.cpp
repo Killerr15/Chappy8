@@ -308,6 +308,11 @@ void chip8::updateTimers()
 	if (soundTimer > 0)
 	{
 		soundTimer--;
+		soundFlag = true;
+	}
+	else
+	{
+		soundFlag = false;
 	}
 }
 
@@ -319,6 +324,11 @@ bool chip8::getDrawFlag()
 void chip8::setDrawFlag(bool flag)
 {
 	drawFlag = flag;
+}
+
+bool chip8::getSoundFlag()
+{
+	return soundFlag;
 }
 
 int chip8::getDisplayVal(int i)

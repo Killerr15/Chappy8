@@ -4,8 +4,6 @@ This is a really basic CHIP-8 emulator made in C++. Chip-8 is an interpreted pro
 
 Now working on both Windows and Linux!
 
-As of right now, emulator doesn't support audio.
-
 ## Building
 
 CMake and SDL2 are required:

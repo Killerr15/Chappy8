@@ -15,6 +15,7 @@ public:
 	void emulate();
 	bool getDrawFlag();
 	void setDrawFlag(bool flag);
+	bool getSoundFlag();
 	int getDisplayVal(int i);
 	void setKeyValue(int x, int y);
 	void updateTimers();
@@ -34,6 +35,7 @@ private:
 	const unsigned int startAddress = 0x200;
 	const unsigned int fontAddress = 0x50;
 	bool drawFlag = false;
+	bool soundFlag = false;
 
 	std::mt19937 randGen;
 	std::uniform_int_distribution<unsigned int> dist;

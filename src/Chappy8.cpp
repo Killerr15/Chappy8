@@ -19,6 +19,27 @@ uint8_t keymap[16] = {
 		SDLK_v,
 };
 
+void audioCallback(void* userdata, uint8_t* stream, int len)
+{
+	uint16_t* data = (uint16_t*)stream;
+	static uint32_t sampleIndex = 0;
+	const uint32_t wavePeriod = have.freq / 440;
+	const uint32_t halfWavePeriod = wavePeriod / 2;
+	constexpr uint16_t volume = 3000;
+
+	for (int i = 0; i < len / 2; i++)
+	{
+		if ((sampleIndex++ / halfWavePeriod) % 2)
+		{
+			data[i] = volume;
+		}
+		else
+		{
+			data[i] = -volume;
+		}
+	}
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -61,6 +82,20 @@ int main(int argc, char* argv[])
 	if (tex == nullptr)
 	{
 		std::cerr << "Oops! Couldn't create SDL texture! " << SDL_GetError() << std::endl;
+		exit(1);
+	}
+
+	auto device = SDL_OpenAudioDevice(0, 0, &want, &have, 0);
+
+	if (device == 0)
+	{
+		std::cerr << "Oops! Couldn't create SDL Audio Device! " << SDL_GetError() << std::endl;
+		exit(1);
+	}
+
+	if (&have != &have)
+	{
+		std::cerr << "Oops! Couldn't get SDL Audio Spec! " << SDL_GetError() << std::endl;
 		exit(1);
 	}
 
@@ -135,7 +170,18 @@ int main(int argc, char* argv[])
 			SDL_RenderCopy(renderer.get(), tex.get(), NULL, NULL);
 			SDL_RenderPresent(renderer.get());
 		}
+
+		if (cpu->getSoundFlag() == true)
+		{
+			SDL_PauseAudioDevice(device, 0);
+		}
+		else
+		{
+			SDL_PauseAudioDevice(device, 1);
+		}
+
 	}
 
+	SDL_CloseAudioDevice(device);
 	SDL_Quit();
 }
